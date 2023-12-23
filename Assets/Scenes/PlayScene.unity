@@ -7415,9 +7415,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4f7385c6ce88464d83063082d5ab766, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isMovablePipes: 1
   playerScore: 0
   scoreToAdd: 1
   ratioSpeed: 1
+  gameMode: {fileID: 0}
   scoreText: {fileID: 1850676509}
   highScoreText: {fileID: 1531300276}
   ratioSpeedText: {fileID: 0}
