@@ -8,7 +8,15 @@ using UnityEngine.UI;
 public class LoaderScript : MonoBehaviour 
 {
     public LogicScript logic;
-    public GameObject settingsScreen;
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            PauseGame();
+        }
+    }
+
     public void StartGame()
     {
         Debug.Log("PlayScene Click)");
@@ -32,19 +40,15 @@ public class LoaderScript : MonoBehaviour
         Application.Quit();
     }
 
-    public void SettingsScreenSetActive()
+    public void PauseGame()
     {
-        if(settingsScreen != null)
+        if(Time.timeScale == 1)
         {
-            settingsScreen.SetActive(true);
+            Time.timeScale = 0;
         }
-    }
-
-    public void SettingsScreenSetFalse()
-    {
-        if (settingsScreen != null)
+        else
         {
-            settingsScreen.SetActive(false);
+            Time.timeScale = 1;
         }
     }
 }

@@ -59,10 +59,11 @@ public class LogicScript : MonoBehaviour
 
     public void LoadSaves()
     {
-        ratioSpeed = SaveLoadManager.LoadRatioSpeed();
-        gameMode = SaveLoadManager.LoadGameMode();
+        ratioSpeed = SaveLoadManager.LoadParam("RatioSpeed");
+        gameMode = SaveLoadManager.LoadParam("GameMode");
 
         ToogleTextMode();
+
         if (ratioSpeed == 0)
         {
             ratioSpeed = 1;
@@ -81,25 +82,25 @@ public class LogicScript : MonoBehaviour
     {
         if (playerScore > _highScore)
         {
-            SaveLoadManager.SaveHighScore(playerScore, _highScoreName);
+            SaveLoadManager.SaveParam(_highScoreName, playerScore);
         }
     }
 
     public void DeleteHighScore()
     {
-        SaveLoadManager.DeleteHighScore(_highScoreName);
+        SaveLoadManager.DeleteParam(_highScoreName);
         LoadSaves();
     }
 
     public void DeleteSpeedRatio()
     {
-        SaveLoadManager.DeleteSpeedGame();
+        SaveLoadManager.DeleteParam("RatioSpeed");
         LoadSaves();
     }
 
     public void DeleteGameMode()
     {
-        SaveLoadManager.DeleteGameMode(); 
+        SaveLoadManager.DeleteParam("GameMode"); 
         LoadSaves();
     }
 
@@ -114,15 +115,23 @@ public class LogicScript : MonoBehaviour
             ratioSpeed = 1;
         }
 
-        SaveLoadManager.SaveRatioSpeedGame(ratioSpeed);
+        SaveLoadManager.SaveParam("RatioSpeed", ratioSpeed);
         LoadSaves();
+    }
+
+    public void ChangeCollider()
+    {
+        int newRadius = 1;
+
+        BirdScript birdScript = GameObject.FindGameObjectWithTag("Bird").GetComponent<BirdScript>();
+        birdScript.ChangeCollider(newRadius);
     }
 
     public int LoadHighScore(string namePrefs)
     {
         if (PlayerPrefs.HasKey(namePrefs))
         {
-            return _highScore = SaveLoadManager.LoadHighScore(namePrefs);
+            return _highScore = SaveLoadManager.LoadParam(namePrefs);
         }
 
         return 0;
@@ -148,8 +157,6 @@ public class LogicScript : MonoBehaviour
 
     public void ToogleBool()
     {
-        Debug.Log("Before Toggle - gameMode: " + gameMode);
-
         if (gameMode == 0)
         {
             if (gameModeText != null)
@@ -159,7 +166,6 @@ public class LogicScript : MonoBehaviour
 
             gameMode = 1;
 
-            SaveLoadManager.SaveGameMode(gameMode);
         }
         else
         {
@@ -169,10 +175,9 @@ public class LogicScript : MonoBehaviour
             }
 
             gameMode = 0;
-            SaveLoadManager.SaveGameMode(gameMode);
         }
 
-        Debug.Log("After Toggle - gameMode: " + gameMode);
+        SaveLoadManager.SaveParam("GameMode", gameMode);
     }
 
     private int CheckHighScoreSaves()

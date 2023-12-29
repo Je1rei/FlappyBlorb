@@ -4,10 +4,13 @@ using UnityEngine;
 
 public class BirdScript : MonoBehaviour
 {
+    [SerializeField]
+    private float faf;
     public Rigidbody2D myRigidbody;
     public float flapStrength;
     public LogicScript logic;
     public bool birdIsAlive = true;
+    public CircleCollider2D circleCollider;
 
     // Start is called before the first frame update
     void Start()
@@ -23,6 +26,11 @@ public class BirdScript : MonoBehaviour
             logic.swingSFX.Play();
             myRigidbody.velocity = Vector2.up * flapStrength;
         }
+    }
+
+    public void ChangeCollider(int newRadius)
+    {
+        circleCollider.radius -= newRadius;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
