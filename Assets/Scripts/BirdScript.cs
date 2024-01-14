@@ -11,6 +11,7 @@ public class BirdScript : MonoBehaviour
     public LogicScript logic;
     public bool birdIsAlive = true;
     public CircleCollider2D circleCollider;
+    private float _jump;
 
     // Start is called before the first frame update
     void Start()
@@ -21,11 +22,15 @@ public class BirdScript : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space) && birdIsAlive)
+        _jump = Input.GetAxis("Jump");
+
+        if (_jump > 0 && birdIsAlive)
         {
             logic.swingSFX.Play();
             myRigidbody.velocity = Vector2.up * flapStrength;
         }
+
+        Debug.LogFormat("Jump:{0}", _jump);
     }
 
     public void ChangeCollider(int newRadius)
@@ -35,7 +40,7 @@ public class BirdScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if(birdIsAlive == true)
+        if (birdIsAlive == true)
         {
             logic.GameOver();
             birdIsAlive = false;
